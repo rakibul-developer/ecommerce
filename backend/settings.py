@@ -142,7 +142,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite dev server
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
