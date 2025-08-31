@@ -9,6 +9,10 @@ from .settings import BASE_DIR, INSTALLED_APPS
 ALLOWED_HOSTS = [os.environ.get("RENDER_EXTERNAL_HOSTNAME")]
 CSRF_TRUSTED_ORIGINS = [f"https://{os.environ.get('RENDER_EXTERNAL_HOSTNAME')}"] # noqa
 
+CORS_ALLOWED_ORIGINS = [
+    "https://ecommerce-pgf0.onrender.com",  # frontend production
+]
+
 DEBUG = False
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
