@@ -52,12 +52,11 @@ STORAGES = {
 
 # WhiteNoise static files
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "static"
+STATICFILES_DIRS = [BASE_DIR / 'static']  # dev-time static files
 
-# Optional: only add STATICFILES_DIRS if folder exists
-STATICFILES_DIRS = (
-    [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
-)
+# production-ready static files
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 
 # Cloudinary Config
 INSTALLED_APPS += [
