@@ -1,24 +1,13 @@
-#!/bin/bash
-set -o errexit  # script stops if any command fails
+#!/usr/bin/env bash
+set -o errexit
 
-echo "Installing Python dependencies..."
 pip install -r requirements/requirements.txt
 
-echo "Collecting static files..."
 python manage.py collectstatic --no-input
 
-echo "Applying database migrations..."
 python manage.py migrate
 
-# Create superuser if CREATE_SUPERUSER=True
-if [[ "$CREATE_SUPERUSER" == "True" && -n "$DJANGO_SUPERUSER_USERNAME" && -n "$DJANGO_SUPERUSER_EMAIL" && -n "$DJANGO_SUPERUSER_PASSWORD" ]]; then
-    echo "Creating superuser..."
-    python manage.py shell -c "from django.contrib.auth import get_user_model; \
-User = get_user_model(); \
-if not User.objects.filter(username='$DJANGO_SUPERUSER_USERNAME').exists(): \
-    User.objects.create_superuser('$DJANGO_SUPERUSER_USERNAME', '$DJANGO_SUPERUSER_EMAIL', '$DJANGO_SUPERUSER_PASSWORD')"
-else
-    echo "Skipping superuser creation, environment variables missing!"
+if [[ $CREATE_SUPERUSER ]]
+then
+    python manage.py createsuperuser --no-input
 fi
-
-echo "Build script completed!"
