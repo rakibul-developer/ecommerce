@@ -102,7 +102,7 @@
 
 
 <script>
-import axios from 'axios'
+import axios from '@/axios'
 import Swal from 'sweetalert2'
 
 export default {
