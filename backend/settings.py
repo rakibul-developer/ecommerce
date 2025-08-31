@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-9wzm@)man*2@&ntp&_vjyae19*zaatnqpss50ak22mkc)vj%60
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*", "ecommerce-backend-rwsf.onrender.com"]
 
 STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY")
 
@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
     'djoser',
     'rest_framework_simplejwt',
 
@@ -138,9 +138,10 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Vite dev server
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "https://ecommerce-pgf0.onrender.com",
+# ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
