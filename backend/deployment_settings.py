@@ -6,12 +6,16 @@ from .settings import BASE_DIR, INSTALLED_APPS
 # ----------------------------
 # Security & Host Config
 # ----------------------------
-ALLOWED_HOSTS = [os.environ.get("RENDER_EXTERNAL_HOSTNAME")]
-CSRF_TRUSTED_ORIGINS = [f"https://{os.environ.get('RENDER_EXTERNAL_HOSTNAME')}"] # noqa
+ALLOWED_HOSTS = ["*"]
+render_host = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if render_host:
+    ALLOWED_HOSTS.append(render_host)
 
-CORS_ALLOWED_ORIGINS = [
-    "https://ecommerce-pgf0.onrender.com",  # frontend production
-]
+CSRF_TRUSTED_ORIGINS = []
+if render_host:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{render_host}")
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 DEBUG = False
 SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -43,7 +47,7 @@ DATABASES = {
 }
 
 # ----------------------------
-# Static & Media (Cloudinary for media)
+# Static & Media
 # ----------------------------
 STORAGES = {
     'default': {  # MEDIA
@@ -54,15 +58,12 @@ STORAGES = {
     },
 }
 
-# WhiteNoise static files
 STATIC_URL = "/static/"
-# STATICFILES_DIRS = [BASE_DIR / 'static']  # dev-time static files
-
-# production-ready static files
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-
+# ----------------------------
 # Cloudinary Config
+# ----------------------------
 INSTALLED_APPS += [
     'cloudinary',
     'cloudinary_storage',
@@ -73,6 +74,3 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.environ.get("CLOUDINARY_API_KEY"),
     'API_SECRET': os.environ.get("CLOUDINARY_API_SECRET"),
 }
-
-# Default file storage will now use Cloudinary
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
