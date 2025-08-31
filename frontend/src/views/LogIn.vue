@@ -36,7 +36,7 @@
 
 
 <script>
-import axios from 'axios'
+import axios from '../axios'
 import Swal from 'sweetalert2'
 
 export default {
@@ -63,7 +63,7 @@ export default {
             }
 
             await axios
-                .post('/api/v1/user/token/login/', formData)  // নতুন API URL
+                .post('api/v1/user/token/login/', formData)
                 .then(response => {
                     console.log('Login response:', response) // লগিন রেসপন্স চেক করার জন্য
                     console.log(response.data)
