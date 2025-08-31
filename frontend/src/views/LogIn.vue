@@ -65,17 +65,34 @@ export default {
             await axios
                 .post('/api/v1/user/token/login/', formData)  // নতুন API URL
                 .then(response => {
-                    const token = response.data.access  // JWT Access Token
+                    console.log('Login response:', response) // লগিন রেসপন্স চেক করার জন্য
+                    console.log(response.data)
+                    const accessToken = response.data.access   // Access token
+                    const refreshToken = response.data.refresh // Refresh token
 
-                    this.$store.commit('setToken', token)  // Vuex Store এ টোকেন সেট করা
-                    this.$store.commit('setUserData', response.data)  // ইউজারের সকল ডাটা Vuex Store এ সেট করা
+                    // শুধু user সম্পর্কিত ডাটা আলাদা করো
+                    const userData = {
+                        id: response.data.id,
+                        username: response.data.username,
+                        email: response.data.email,
+                        first_name: response.data.first_name,
+                        last_name: response.data.last_name,
+                    }
 
-                    axios.defaults.headers.common['Authorization'] = "Bearer " + token  // টোকেন সহ Authorization হেডার সেট করা
+                    // Vuex store এ সেট করো
+                    this.$store.commit('setToken', accessToken)
+                    this.$store.commit('setUserData', userData)
 
-                    localStorage.setItem('token', token)  // টোকেন লোকাল স্টোরেজে সেভ করা
-                    localStorage.setItem('userData', JSON.stringify(response.data))  // ইউজারের ডাটা লোকাল স্টোরেজে সেভ করা
+                    // Axios default header সেট করো
+                    axios.defaults.headers.common['Authorization'] = "Bearer " + accessToken
 
-                    const toPath = this.$route.query.to || '/cart'  // যেখানে রিডিরেক্ট করতে চান
+                    // LocalStorage এ সেভ করো
+                    localStorage.setItem('token', accessToken)
+                    localStorage.setItem('refresh_token', refreshToken) // চাইলে এটা future refresh এর জন্য
+                    localStorage.setItem('userData', JSON.stringify(userData))
+
+                    // Redirect
+                    const toPath = this.$route.query.to || '/cart'
                     this.$router.push(toPath)
                 })
                 .catch(error => {
