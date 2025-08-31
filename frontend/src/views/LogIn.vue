@@ -63,7 +63,7 @@ export default {
             }
 
             await axios
-                .post('/api/v1/user/token/login/', formData)  // নতুন API URL
+                .post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/token/login/`, formData)  // নতুন API URL
                 .then(response => {
                     console.log('Login response:', response) // লগিন রেসপন্স চেক করার জন্য
                     console.log(response.data)
