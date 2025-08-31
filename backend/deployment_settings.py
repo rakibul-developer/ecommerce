@@ -50,8 +50,14 @@ STORAGES = {
     },
 }
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# WhiteNoise static files
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "static"
+
+# Optional: only add STATICFILES_DIRS if folder exists
+STATICFILES_DIRS = (
+    [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
+)
 
 # Cloudinary Config
 INSTALLED_APPS += [
