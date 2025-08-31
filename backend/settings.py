@@ -142,10 +142,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite dev server
 ]
 
-if DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True
-
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
