@@ -63,7 +63,7 @@ export default {
             }
 
             await axios
-                .post('api/v1/user/token/login/', formData)  // নতুন API URL
+                .post('/api/v1/user/token/login/', formData)  // নতুন API URL
                 .then(response => {
                     const token = response.data.access  // JWT Access Token
 
