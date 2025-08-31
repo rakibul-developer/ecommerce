@@ -132,7 +132,7 @@ export default {
         }
     },
     mounted() {
-        document.title = 'Checkout | Djackets'
+        document.title = 'Checkout | CodexZo Ecommerce'
 
         this.cart = this.$store.state.cart
 

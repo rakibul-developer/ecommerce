@@ -34,7 +34,7 @@ class CheckoutAPIView(APIView):
                 charge = stripe.Charge.create(
                     amount=int(paid_amount * 100),  # Stripe requires amount in cents
                     currency='USD',
-                    description='Charge from Djackets',
+                    description='Charge from CodexZo Ecommerce',
                     source=serializer.validated_data['stripe_token']
                 )
 
