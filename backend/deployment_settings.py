@@ -52,7 +52,7 @@ STORAGES = {
 
 # WhiteNoise static files
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / 'static']  # dev-time static files
+# STATICFILES_DIRS = [BASE_DIR / 'static']  # dev-time static files
 
 # production-ready static files
 STATIC_ROOT = BASE_DIR / "staticfiles"
