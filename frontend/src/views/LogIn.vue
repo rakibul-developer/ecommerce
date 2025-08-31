@@ -63,7 +63,7 @@ export default {
             }
 
             await axios
-                .post('/user/token/login/', formData)
+                .post('api/v1/user/token/login/', formData)
                 .then(response => {
                     console.log('Login response:', response) // লগিন রেসপন্স চেক করার জন্য
                     console.log(response.data)
