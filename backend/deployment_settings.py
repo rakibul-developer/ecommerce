@@ -15,32 +15,25 @@ CSRF_TRUSTED_ORIGINS = []
 if render_host:
     CSRF_TRUSTED_ORIGINS.append(f"https://{render_host}")
 
-# ----------------------------
-# CORS Config
-# ----------------------------
-INSTALLED_APPS += ["corsheaders"]
-
-MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",  # একদম উপরে
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # For static files
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
-
-CORS_ALLOW_ALL_ORIGINS = True  # সমস্ত frontend থেকে allow
-# যদি তুমি নির্দিষ্ট frontend origin চাও:
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     "https://your-frontend.onrender.com",
-# ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 DEBUG = False
 SECRET_KEY = os.environ.get("SECRET_KEY")
+
+# ----------------------------
+# Middleware (with WhiteNoise)
+# ----------------------------
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # For static files
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
 # ----------------------------
 # Database (Postgres on Render)
@@ -54,27 +47,30 @@ DATABASES = {
 }
 
 # ----------------------------
-# Static & Media (WhiteNoise + Cloudinary)
+# Static & Media
 # ----------------------------
-INSTALLED_APPS += [
-    "cloudinary",
-    "cloudinary_storage",
-]
-
 STORAGES = {
-    "default": {  # MEDIA
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    'default': {  # MEDIA
+        'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
     },
-    "staticfiles": {  # STATIC
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    'staticfiles': {  # STATIC
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
     },
 }
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# ----------------------------
+# Cloudinary Config
+# ----------------------------
+INSTALLED_APPS += [
+    'cloudinary',
+    'cloudinary_storage',
+]
+
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+    'CLOUD_NAME': os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    'API_KEY': os.environ.get("CLOUDINARY_API_KEY"),
+    'API_SECRET': os.environ.get("CLOUDINARY_API_SECRET"),
 }
